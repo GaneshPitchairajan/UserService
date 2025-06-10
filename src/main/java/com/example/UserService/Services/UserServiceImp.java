@@ -34,7 +34,13 @@ public class UserServiceImp implements UserServices{
     }
 
     @Override
-    public Optional<Users> LogIn(String email, String password) {
-        return Optional.empty();
+    public Users LogIn(String email, String password) {
+        Optional<Users> user=userRepo.findByEmail(email);
+        if (user.isEmpty()){
+            return null;
+        }
+        else{
+            return user.get();
+        }
     }
 }
