@@ -18,29 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     UserServiceImp userServiceImp;
+
     @Autowired
-    public UserController(UserServiceImp userServiceImp){
-        this.userServiceImp=userServiceImp;
+    public UserController(UserServiceImp userServiceImp) {
+        this.userServiceImp = userServiceImp;
     }
 
     @PostMapping("/signup")
-    private SignupLoginResponsedto signup(@Valid @RequestBody SignupRequestdto request){
+    private SignupLoginResponsedto signup(@Valid @RequestBody SignupRequestdto request) {
         System.out.println("signup done");
-        Users createduser= userServiceImp.Signup(request.getName(), request.getEmail(),request.getPassword());
-        if (createduser==null){
-            throw new UserExistException("From Controller :THE USER "+request.getEmail()+" IS ALREADY PRESENT!");
+        Users createduser = userServiceImp.Signup(request.getName(), request.getEmail(), request.getPassword());
+        System.out.println("From Controller :THE USER " + request.getEmail() + " IS CREATED !");
+        return SignupLoginResponsedto.fromEntity(createduser);
 
-        }
-        else{
-            System.out.println("From Controller :THE USER "+request.getEmail()+" IS CREATED !");
-            return SignupLoginResponsedto.fromEntity(createduser);
-        }
     }
 
     @PostMapping("/login")
-    private SignupLoginResponsedto login(@Valid @RequestBody LoginRequestdto loginRequestdto){
-        Users users=userServiceImp.LogIn(loginRequestdto.getEmail(), loginRequestdto.getPassword());
-        if(users == null){
+    private SignupLoginResponsedto login(@Valid @RequestBody LoginRequestdto loginRequestdto) {
+        Users users = userServiceImp.LogIn(loginRequestdto.getEmail(), loginRequestdto.getPassword());
+        if (users == null) {
             throw new RuntimeException("User not Exist , kindly SignUp before LogIn");
         }
         return SignupLoginResponsedto.fromEntity(users);

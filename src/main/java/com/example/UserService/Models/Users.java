@@ -1,5 +1,6 @@
 package com.example.UserService.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import java.util.List;
 @Entity(name="users")
 public class Users extends BaseModel {
     private String name;
+
+    @Column(unique = true)
     private String email;
 
     private String password;
