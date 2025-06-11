@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    private SignupLoginResponsedto signup(@Valid @RequestBody SignupRequestdto request) {
+    public SignupLoginResponsedto signup(@Valid @RequestBody SignupRequestdto request) {
         System.out.println("signup done");
         Users createduser = userServiceImp.Signup(request.getName(), request.getEmail(), request.getPassword());
         System.out.println("From Controller :THE USER " + request.getEmail() + " IS CREATED !");
@@ -34,11 +34,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    private SignupLoginResponsedto login(@Valid @RequestBody LoginRequestdto loginRequestdto) {
-        Users users = userServiceImp.LogIn(loginRequestdto.getEmail(), loginRequestdto.getPassword());
-        if (users == null) {
-            throw new RuntimeException("User not Exist , kindly SignUp before LogIn");
-        }
-        return SignupLoginResponsedto.fromEntity(users);
+    public String login(@Valid @RequestBody LoginRequestdto loginRequestdto) {
+        String token = userServiceImp.LogIn(loginRequestdto.getEmail(), loginRequestdto.getPassword());
+        return token;
+        //return SignupLoginResponsedto.fromEntity(users);
     }
 }
