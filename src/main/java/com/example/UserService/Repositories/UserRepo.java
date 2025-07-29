@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends JpaRepository<Users,Long> {
     Optional<Users> findByEmail(String email);
+    Optional<Users> deleteByEmail(String email);
 }

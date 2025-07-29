@@ -3,15 +3,11 @@ package com.example.UserService.Controllers;
 import com.example.UserService.DTOs.LoginRequestdto;
 import com.example.UserService.DTOs.SignupRequestdto;
 import com.example.UserService.DTOs.SignupLoginResponsedto;
-import com.example.UserService.Exception.UserExistException;
 import com.example.UserService.Models.Users;
 import com.example.UserService.Services.UserServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -38,5 +34,11 @@ public class UserController {
         String token = userServiceImp.LogIn(loginRequestdto.getEmail(), loginRequestdto.getPassword());
         return token;
         //return SignupLoginResponsedto.fromEntity(users);
+    }
+
+    @DeleteMapping("/")
+    public SignupLoginResponsedto delete(@Valid @RequestBody LoginRequestdto deleteUserdto){
+        Users deleted=userServiceImp.Delete(deleteUserdto.getEmail(), deleteUserdto.getPassword());
+        return SignupLoginResponsedto.fromEntity(deleted);
     }
 }

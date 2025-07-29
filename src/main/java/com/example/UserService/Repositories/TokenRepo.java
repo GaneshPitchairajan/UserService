@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface TokenRepo extends JpaRepository<Token,Long> {
 
-    //Optional<Token> findByTokenAndExpiry_date(String tokenValue, LocalDateTime localDateTime);
+    Optional<Token> findFirstByUser_idOrderByCreatedateDesc(Long userId);
+    void deleteByUser_id(Long userId);
+
 }

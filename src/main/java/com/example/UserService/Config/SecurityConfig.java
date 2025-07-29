@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",
+                                "/","users/",
                                 "users/login",
                                 "/oauth2/**",
                                 "users/signup"     // ✅ allow both POST /signup and any subroutes
